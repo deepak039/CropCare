@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+numpy
+requests
+Pillow
+google-generativeai
+textwrap3
+IPython
