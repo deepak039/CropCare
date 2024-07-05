@@ -16,7 +16,7 @@ def to_markdown(text):
     text = text.replace('•', '  *')
     return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True)).data
 
-genai.configure(api_key='AIzaSyBo2OKZF1011lVP9wuOg2YBTaECDSWh6eE')
+genai.configure(api_key='')
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 origins = [
