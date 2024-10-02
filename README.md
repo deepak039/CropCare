@@ -107,8 +107,7 @@ The response includes:
 - **Confidence**: Confidence score for the prediction.
 - **Suggestion**: Care or treatment recommendation provided by Google Generative AI.
 
-## Environment Variables
 
-- **MODEL_NAME**: (Set to `plant`) Configures the model name in the TensorFlow Serving container.
-- **Google Generative AI API Key**: Required for querying Google’s Generative AI (must be added in `main.py`).
+
+
 
