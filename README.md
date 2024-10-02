@@ -1,39 +1,24 @@
-Here's a more abstracted version of the `README.md` while still including all necessary information:
+
 
 ---
 
-# Potato Disease Classification and Treatment Suggestion System
+# Crop Care: Disease Classification and Treatment Suggestion System
 
-This project provides a solution for classifying potato leaf diseases using a TensorFlow model, served via TensorFlow Serving. A FastAPI-based web service allows users to upload images of potato leaves and receive predictions, along with treatment or care suggestions generated using Google Generative AI.
+This project provides a scalable solution for classifying crop diseases using a TensorFlow model, served via TensorFlow Serving. A FastAPI-based web service allows users to upload images of crops (starting with potato leaves) and receive disease predictions, along with treatment or care suggestions generated using Google Generative AI.
 
 ## Project Overview
 
 ### Key Features:
-- **Disease Classification**: Identifies potato leaf diseases from images as either:
-  - Early Blight
-  - Late Blight
-  - Healthy
-- **Treatment Suggestions**: Provides care recommendations using Google Generative AI based on the diagnosed disease.
+- **Disease Classification**: Identifies crop diseases from images (starting with potatoes) and provides future extensibility to include other crops.
+- **Treatment Suggestions**: Offers care recommendations using Google Generative AI based on the diagnosed disease.
 - **Dockerized Deployment**: Both the TensorFlow model and the FastAPI web service are containerized with Docker for easy deployment.
 
-### Project Structure:
-```plaintext
-model/
-└── 1/                # Saved TensorFlow model (version 1)
 
-web_service/
-├── static/           # Static assets (optional)
-├── Dockerfile        # Dockerfile for the FastAPI service
-├── main.py           # Web service logic with FastAPI
-├── requirements.txt  # Python dependencies for the web service
-Dockerfile            # Dockerfile for TensorFlow Serving API
-training.ipynb        # Notebook documenting model training
-```
 
 ## Components
 
 ### 1. Model Training
-The model was trained on the *PlantVillage* dataset and saved for deployment via TensorFlow Serving. The training process is documented in `training.ipynb`.
+The model was trained on the *PlantVillage* dataset and saved for deployment via TensorFlow Serving. The training process is documented in `training.ipynb`. Currently, the model focuses on potato leaf diseases but is designed to be extendable to other crops in the future.
 
 ### 2. TensorFlow Serving API
 
@@ -45,14 +30,14 @@ COPY plant /models/plant
 ENV MODEL_NAME=plant
 ```
 
-This configures TensorFlow Serving to expose an API for the potato disease classification model.
+This configures TensorFlow Serving to expose an API for the crop disease classification model.
 
 ### 3. Web Service
 
 A FastAPI application serves as the interface for users to upload images, receive disease predictions, and obtain care suggestions. The web service is integrated with Google Generative AI for generating treatment advice based on the model's predictions.
 
 Key functionalities:
-- **POST `/predict`**: Upload a potato leaf image to receive a disease classification and care recommendation.
+- **POST `/predict`**: Upload a crop image to receive a disease classification and care recommendation.
 - **GET `/ping`**: Health check for the web service.
 
 #### Web Service Dockerfile
@@ -86,8 +71,8 @@ Once the disease is classified, the model sends a prompt to Google Generative AI
 To serve the model via Docker:
 
 ```bash
-docker build -t potato_model -f Dockerfile .
-docker run -p 8501:8501 potato_model
+docker build -t crop_model -f Dockerfile .
+docker run -p 8501:8501 crop_model
 ```
 
 This will expose the model API at `http://localhost:8501/v1/models/plant:predict`.
@@ -98,10 +83,10 @@ To start the FastAPI web service:
 
 ```bash
 # Build the web service Docker image
-docker build -t potato_web_service ./web_service
+docker build -t crop_web_service ./web_service
 
 # Run the service on port 8001
-docker run -p 8001:8001 potato_web_service
+docker run -p 8001:8001 crop_web_service
 ```
 
 This starts the FastAPI app on `http://localhost:8001`.
@@ -118,7 +103,7 @@ This starts the FastAPI app on `http://localhost:8001`.
     ```
 
 The response includes:
-- **Class**: The predicted disease (Early Blight, Late Blight, or Healthy).
+- **Class**: The predicted disease (e.g., Early Blight, Late Blight, Healthy for potatoes).
 - **Confidence**: Confidence score for the prediction.
 - **Suggestion**: Care or treatment recommendation provided by Google Generative AI.
 
@@ -127,10 +112,3 @@ The response includes:
 - **MODEL_NAME**: (Set to `plant`) Configures the model name in the TensorFlow Serving container.
 - **Google Generative AI API Key**: Required for querying Google’s Generative AI (must be added in `main.py`).
 
-## License
-
-This project is licensed under the MIT License.
-
----
-
-This abstracted `README.md` covers all necessary steps and explains the core components without getting into overly specific details. Let me know if you'd like further adjustments!
